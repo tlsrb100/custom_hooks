@@ -1,12 +1,11 @@
-import useBeforeLeave from './hooks/useBeforeLeave';
+import useFadeIn from './hooks/useFadeIn';
 function App() {
-  const begForLife = () => {
-    console.log('Pls dont leave');
-  };
-  useBeforeLeave(begForLife);
+  const fadeInH1 = useFadeIn(1, 2);
+  const fadeInP = useFadeIn(5, 10);
   return (
     <div className='App'>
-      <h1>Hello</h1>
+      <h1 {...fadeInH1}>Hello</h1>
+      <p {...fadeInP}>tlsrb11100</p>
     </div>
   );
 }
