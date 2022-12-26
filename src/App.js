@@ -1,27 +1,13 @@
-import { useRef, useEffect } from 'react';
-
-const useClick = (onClick) => {
-  const element = useRef();
-  useEffect(() => {
-    if (element.current) {
-      element.current.addEventListener('click', onClick);
-    }
-    return () => {
-      if (element.current) {
-        element.current.removeEventListener('click', onClick);
-      }
-    };
-  }, []);
-  return element;
-};
+import useConfirm from './hooks/useConfirm';
 function App() {
-  const sayHello = () => {
-    console.log('say Hello');
+  const deleteWorld = () => console.log('delete the world');
+  const abort = () => {
+    console.log('aborted');
   };
-  const title = useClick(sayHello);
+  const confirmDelete = useConfirm('are you sure?', deleteWorld, abort);
   return (
     <div className='App'>
-      <h1 ref={title}>Hi</h1>
+      <button onClick={confirmDelete}>Delete the world</button>
     </div>
   );
 }
