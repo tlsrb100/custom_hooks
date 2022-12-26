@@ -1,13 +1,22 @@
-import useConfirm from './hooks/useConfirm';
-function App() {
-  const deleteWorld = () => console.log('delete the world');
-  const abort = () => {
-    console.log('aborted');
+const usePreventLeave = () => {
+  const listener = (event) => {
+    event.preventDefault();
+    event.returnValue = '';
   };
-  const confirmDelete = useConfirm('are you sure?', deleteWorld, abort);
+  const enablePrevent = () => {
+    window.addEventListener('beforeunload', listener);
+  };
+  const disablePrevent = () => {
+    window.removeEventListener('beforeunload', listener);
+  };
+  return { enablePrevent, disablePrevent };
+};
+function App() {
+  const { enablePrevent, disablePrevent } = usePreventLeave();
   return (
     <div className='App'>
-      <button onClick={confirmDelete}>Delete the world</button>
+      <button onClick={enablePrevent}>Protect</button>
+      <button onClick={disablePrevent}>Unprotect</button>
     </div>
   );
 }
