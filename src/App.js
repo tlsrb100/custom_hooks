@@ -1,17 +1,14 @@
-import useFullscreen from './hooks/useFullscreen';
+import useAxios from './hooks/useAxios';
 function App() {
-  const onFullS = (isFull) => {
-    console.log(isFull ? 'We are full' : 'We are small');
-  };
-  const { element: fullScrEl, triggerFull, exitFull } = useFullscreen(onFullS);
-
+  const { loading, error, data, refetch } = useAxios({
+    url: 'https://yts.mx/api/v2/list_movies.json',
+  });
+  console.log(loading, error, data);
   return (
     <div className='App' style={{ height: '1000vh' }}>
-      <div ref={fullScrEl}>
-        <img src='https://i.ibb.co/R6RwNxx/grape.jpg' alt='grape' />
-        <button onClick={exitFull}>Exit fullscreen</button>
-      </div>
-      <button onClick={triggerFull}>Make fullscreen</button>
+      <h1>status는 {data && data.status}</h1>
+      <h2>{loading ? 'is loading...' : 'is loaded'}</h2>
+      <button onClick={refetch}>refetch</button>
     </div>
   );
 }
